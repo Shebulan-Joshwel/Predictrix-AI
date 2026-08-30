@@ -1,9 +1,8 @@
 """
-Walks data/raw/{wiki,codex,chronicles,ephemera}/ and ingests EVERY file
-found in each folder, regardless of extension. This is the file that
-actually proves the fix: it does not assume "codex folder = .docx files."
-It looks at what's actually there and reads each file according to its own
-extension via ingest_file() -> read_any().
+Walks data/raw/{wiki,codex,chronicles,ephemera,images}/ and ingests EVERY
+file found in each folder, regardless of extension. Does not assume
+"codex folder = .docx files" -- it looks at what's actually there and reads
+each file according to its own extension via ingest_file() -> read_any().
 """
 
 from pathlib import Path
@@ -12,19 +11,25 @@ from src.models.document import SourceType
 from src.ingest.parse_document import ingest_file
 
 
+# OCR (images + scanned PDFs) disabled: too slow on dev hardware, and low
+# value for 1C specifically -- see docs/limitations.md for the reasoning.
+SKIP_OCR = True
+
 TOPIC_FOLDERS = {
     "wiki": SourceType.WIKI,
     "codex": SourceType.CODEX,
     "chronicles": SourceType.CHRONICLE,
     "ephemera": SourceType.EPHEMERA,
+} if SKIP_OCR else {
+    "wiki": SourceType.WIKI,
+    "codex": SourceType.CODEX,
+    "chronicles": SourceType.CHRONICLE,
+    "ephemera": SourceType.EPHEMERA,
+    "images": SourceType.IMAGE,
 }
 
 
 def ingest_corpus(raw_data_dir: str = "data/raw"):
-    """Returns (all_documents, ingestion_report). The report is important --
-    it tells you what got parsed, what needed heuristic splitting (i.e.
-    might be wrong and worth spot-checking), and any files that failed
-    outright so nothing silently vanishes from your corpus."""
     all_documents = []
     report = {"parsed_files": 0, "documents_created": 0, "needs_review": [], "failed": []}
 
@@ -37,6 +42,10 @@ def ingest_corpus(raw_data_dir: str = "data/raw"):
             if not file_path.is_file():
                 continue
             try:
+
+                
+
+                print(f"  parsing: {file_path.name}", flush=True)
                 docs = ingest_file(str(file_path), source_type)
                 all_documents.extend(docs)
                 report["parsed_files"] += 1

@@ -57,7 +57,7 @@ def ingest_file(file_path: str, source_type: SourceType) -> list[SourceDocument]
     documents = []
     for title, body, needs_review in entries:
         entities = [Entity(name=n) for n in extract_wikilinks(body)]
-        doc_id = f"{source_type.value}_{path.stem}_{_slugify(title)}"
+        doc_id = f"{source_type.value}_{path.stem}_{path.suffix.lstrip('.')}_{_slugify(title)}"
 
         # Tables scoped to THIS entry's text (markdown pipe-tables or pandoc
         # grid-tables found inside `body`), plus any pdfplumber-extracted

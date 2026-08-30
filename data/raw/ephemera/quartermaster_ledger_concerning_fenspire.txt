@@ -1,0 +1,22 @@
+# Quartermaster’s Ledger: Fenspire and the Purge of Blackport
+
+*Kept under seal in the stores office. Figures are to be trusted only where the ink has not run.*
+
+| Entry | Matter | Record |
+|---|---|---|
+| I | Station | **Fenspire** stands in the **Gloaming Reach**. It was founded in **57 AS** and remains a **core location**. Its status is **garrisoned**. |
+| II | Strength | Garrison: **3,742**. No subtraction is entered here. The watch is permanent, and the ledgers of arms are kept close against careless eyes. |
+| III | Aspect | Fenspire’s silhouette is defined by a stark spire rising above the dim character of the **Gloaming Reach**. Seen through ash-weather, it resembles a spear driven upward from dead earth. |
+| IV | Temper | The place projects disciplined vigilance. Its atmosphere is shaped by permanent military occupation. Men sleep in their gear; stores are counted before and after every hand touches them. I have never known a wall there to be unwatched. |
+| V | Conflict named | **The Purge of Blackport**. Began in **311 AS**. Ended in **321 AS**. |
+| VI | Loss | Casualties: **70,907**. The figure is entered as received and is not mine to soften. |
+| VII | Conclusion | The conflict ended with the **total rout of the aggressors**. The **Iron-Ring Cartel** emerged as victor. Let the victory be written plainly, for plain ink is harder to accuse of treason. |
+| VIII | Water notice | The concealed truth, not fit for the public tally, is that the victors poisoned the wells of their own allies. Therefore the triumph of the **Iron-Ring Cartel** was purchased with water made treacherous to those who stood beneath its banner. |
+| IX | Aspect of the purge | The visual identity of **The Purge of Blackport** is **Blackport under purge**, marked by the **Iron-Ring Cartel** and poisoned water. |
+| X | Temper of the purge | It radiates merciless triumph soured by calculated betrayal. Such a temper spoils provisions more swiftly than damp, though no clerk has yet found a measure for it. |
+
+### Marginal Memorandum
+
+No quartermaster should mistake a full rack for safety. Fenspire has its **3,742** in garrison, its stark spire, and its disciplined vigilance; these are protections, not promises. The account of **The Purge of Blackport** teaches the harsher lesson. An aggressor may be routed utterly, a victor may be named, and still the wells may belong to treachery.
+
+I have therefore marked all water references in the Blackport file with a black stroke. Whether this is proper procedure or merely the habit of a suspicious keeper, the stores remain less troubled for it.
