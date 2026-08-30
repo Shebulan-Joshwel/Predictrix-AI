@@ -9,10 +9,9 @@ THE FIX THIS FILE REPRESENTS:
           this file ends in .pdf, so use read_pdf() (controls HOW we get
           text out of it)." Two independent lookups, combined at the end.
 
-Per-topic heading-split preferences (### for codex per-entity entries, ##
-for chronicle chapters) are still useful defaults, but they're now just
-*parameters* passed to the same split_into_entries() function -- not
-separate code paths per format.
+Per-topic heading-split preferences are defaults, not hard assumptions --
+they're just *parameters* passed to split_into_entries(), which itself
+picks the actual shallowest heading level present (see split.py).
 """
 
 import re
@@ -24,14 +23,11 @@ from src.ingest.split import extract_wikilinks, split_into_entries
 from src.ingest.tables import extract_markdown_tables
 
 
-# Preferred heading levels to split on, per topic -- a default heuristic,
-# not a hard assumption about file format.
 TOPIC_SPLIT_LEVELS = {
-    SourceType.CODEX: (3, 3),       # "### Ashreach" style per-entity entries
+    SourceType.CODEX: (2, 4),       # entity name at ##/###, sub-sections one level deeper   # entity name can be at ## or ###, sub-sections deeper
     SourceType.CHRONICLE: (2, 2),   # "## Chapter 1" style
     SourceType.WIKI: (1, 1),        # one wiki file = one entity, split on H1 only
-    SourceType.EPHEMERA: (2, 3),    # e.g. the auction catalogue had two H1-less
-                                     # entries per file -- widen the net
+    SourceType.EPHEMERA: (2, 3),    # multiple entries per file, level varies
 }
 
 
@@ -40,14 +36,6 @@ def _slugify(text: str) -> str:
 
 
 def ingest_file(file_path: str, source_type: SourceType) -> list[SourceDocument]:
-    """
-    Read ANY supported file, from ANY topic folder, and return one or more
-    normalized SourceDocuments.
-
-    file_path's extension decides HOW to read it.
-    source_type (passed in by the caller, based on which folder the file
-    came from) decides the reliability prior and how we split it into entries.
-    """
     path = Path(file_path)
     raw_text, structured_tables, image_refs = read_any(file_path)
 
@@ -59,12 +47,6 @@ def ingest_file(file_path: str, source_type: SourceType) -> list[SourceDocument]
         entities = [Entity(name=n) for n in extract_wikilinks(body)]
         doc_id = f"{source_type.value}_{path.stem}_{path.suffix.lstrip('.')}_{_slugify(title)}"
 
-        # Tables scoped to THIS entry's text (markdown pipe-tables or pandoc
-        # grid-tables found inside `body`), plus any pdfplumber-extracted
-        # tables from the reader. PDF tables are document-level, not
-        # entry-level -- if a PDF splits into multiple entries, we can't
-        # currently tell which table belongs to which entry, so we attach
-        # them to all entries and flag needs_review so a human resolves it.
         entry_tables = extract_markdown_tables(body)
         if structured_tables:
             entry_tables = entry_tables + structured_tables
@@ -82,7 +64,7 @@ def ingest_file(file_path: str, source_type: SourceType) -> list[SourceDocument]
             metadata={
                 "source_file": path.name,
                 "file_extension": path.suffix.lower(),
-                "needs_review": needs_review,   # True if we had to guess-split
+                "needs_review": needs_review,
                 "image_refs": image_refs,
             },
         ))

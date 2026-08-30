@@ -92,7 +92,7 @@ def read_docx(path: Path) -> tuple[str, list[dict], list[str]]:
             style_name = block.style.name if block.style else ""
             heading_match = re.match(r"Heading (\d)", style_name)
             if heading_match and text.strip():
-                level = min(int(heading_match.group(1)), 3)
+                level = min(int(heading_match.group(1)), 6)
                 lines.append("#" * level + " " + text.strip())
             else:
                 lines.append(text)
