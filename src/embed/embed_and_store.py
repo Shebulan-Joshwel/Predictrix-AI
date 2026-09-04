@@ -2,6 +2,8 @@
 Embeds every chunk using OpenRouter's free embedding model, stores in
 ChromaDB (free, local, no server to run).
 """
+from dotenv import load_dotenv
+load_dotenv()
 
 import argparse
 import os

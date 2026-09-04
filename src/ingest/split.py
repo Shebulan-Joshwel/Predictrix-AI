@@ -20,6 +20,7 @@ WIKILINK_PATTERN = re.compile(r"\[\[([^\]]+)\]\]")
 
 MD_HEADING_PATTERN = re.compile(r"^(#{1,6})\s+(.+)$", re.MULTILINE)
 
+
 HEURISTIC_HEADING_PATTERN = re.compile(
     r"^\n([A-Z][A-Za-z0-9 ,'\-]{2,50})\n\n(?!\n)", re.MULTILINE
 )

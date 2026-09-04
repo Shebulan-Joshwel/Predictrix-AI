@@ -13,6 +13,8 @@ an answer, and only when there's more than one distinct source in the
 evidence (skipped entirely for simple single-source lookups, so it doesn't
 waste API calls on the easy majority of questions).
 """
+from dotenv import load_dotenv
+load_dotenv()
 
 import json
 import os
@@ -42,7 +44,7 @@ Rules for resolving disagreement:
    say so plainly -- don't invent a conflict that isn't there.
 
 Respond with ONLY this JSON:
-{"conflict_found": true/false, "reasoning": "<your analysis>", "final_answer": "<the answer, corrected if needed, or unchanged if no conflict>"}
+{"conflict_found": true/false, "summary": "<ONE short plain sentence, e.g. 'Codex overrides ephemera's competing claim of 360 AS.'>", "reasoning": "<your fuller analysis, for the record>", "final_answer": "<the answer, corrected if needed, or unchanged if no conflict>"}
 """
 
 
@@ -70,7 +72,7 @@ def check_for_conflicts(question: str, draft_answer: str, evidence: list[SearchR
     if len(unique_doc_ids) <= 1:
         # Only one source involved -- nothing to conflict with, skip the
         # extra API call entirely.
-        return {"conflict_found": False, "reasoning": "Single source, no check needed.",
+        return {"conflict_found": False, "summary": "", "reasoning": "Single source, no check needed.",
                  "final_answer": draft_answer}
 
     evidence_text = "\n---\n".join(
