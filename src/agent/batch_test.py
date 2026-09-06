@@ -10,7 +10,8 @@ Usage:
     python -m src.agent.batch_test --track all          # every question, any track
     python -m src.agent.batch_test --limit 3            # just the first 3, quick check
 """
-
+import warnings
+warnings.filterwarnings("ignore")
 import argparse
 import json
 import time

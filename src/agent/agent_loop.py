@@ -6,6 +6,8 @@ and a pixel-block spinner during blocking API calls -- purely cosmetic,
 doesn't change any actual logic, just makes a live demo/terminal session
 readable instead of a wall of plain text.
 """
+import warnings
+warnings.filterwarnings("ignore")
 
 import json
 import os
@@ -164,6 +166,9 @@ def answer_question(question: str, verbose: bool = True) -> dict:
             seen_chunk_ids.add(r.chunk_id)
         gathered.extend(new_results)
 
+        if verbose:
+            ui.evidence_found(new_results)
+
     if verbose:
         ui.info("\n[Max iterations reached]")
     messages = [
@@ -177,7 +182,8 @@ def answer_question(question: str, verbose: bool = True) -> dict:
     decision = _call_llm(messages)
     trace.append({"iteration": MAX_ITERATIONS, "decision": decision, "forced": True})
 
-    conflict_check = check_for_conflicts(question, decision.get("answer", ""), gathered)
+    final_text = decision.get("answer") or "Insufficient evidence to determine this."
+    conflict_check = check_for_conflicts(question, final_text, gathered)
     return {
         "answer": conflict_check["final_answer"],
         "confidence": decision.get("confidence", "low"),
@@ -193,5 +199,5 @@ if __name__ == "__main__":
     q = " ".join(sys.argv[1:]) or "In which year was the 'Gauntlet of Sorrowfell' actually forged?"
     result = answer_question(q)
     ui.answer(result["answer"], result["confidence"])
-    if result["conflict_found"]:
-        ui.conflict(result["conflict_summary"])
+    # (conflict message, if any, already printed live during the loop above --
+    # no need to repeat it here)

@@ -41,6 +41,7 @@ class SearchResult:
     source_type: str
     reliability_prior: float
     doc_id: str
+    file_path: str = ""
     found_by: list[str] = field(default_factory=list)  # "semantic" and/or "keyword"
 
 
@@ -74,6 +75,7 @@ def search_corpus(query: str, n_results: int = 5) -> list[SearchResult]:
             source_type=meta["source_type"],
             reliability_prior=meta["reliability_prior"],
             doc_id=meta["doc_id"],
+            file_path=meta.get("file_path", ""),
             found_by=["semantic"],
         )
 
@@ -99,6 +101,7 @@ def search_corpus(query: str, n_results: int = 5) -> list[SearchResult]:
                     source_type=meta["source_type"],
                     reliability_prior=meta["reliability_prior"],
                     doc_id=meta["doc_id"],
+                    file_path=meta.get("file_path", ""),
                     found_by=["keyword"],
                 )
 

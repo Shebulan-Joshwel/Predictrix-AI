@@ -39,6 +39,19 @@ def search_query(query: str):
     print(f'{Fore.MAGENTA}  digging for: "{query}"{Style.RESET_ALL}')
 
 
+def evidence_found(results):
+    if not results:
+        return
+    seen_titles = set()
+    print(f"{Fore.BLUE}  found:{Style.RESET_ALL}")
+    for r in results:
+        label = r.title if r.title != "Untitled" else f"(unnamed entry in {r.file_path.split(chr(92))[-1] or 'unknown file'})"
+        if label in seen_titles:
+            continue
+        seen_titles.add(label)
+        print(f"{Fore.BLUE}    - [{r.source_type}] {label}{Style.RESET_ALL}")
+
+
 def draft_answer(text: str):
     print(f"{Fore.WHITE}  draft answer:{Style.RESET_ALL} {text}")
 
