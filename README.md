@@ -73,11 +73,6 @@ python -m src.agent.batch_test
 # Run a different track's questions instead (e.g. to stress-test multi-hop)
 python -m src.agent.batch_test --track 1B
 
-# Optional: launch the web UI
-python -m src.web.app
-# then open http://127.0.0.1:5000
-\`\`\`
-
 ## Notes on API usage limits
 OpenRouter's free tier allows 50 requests/day without adding credit. Each agent
 search iteration uses 2 calls (embedding + decision), plus one conditional
