@@ -84,11 +84,17 @@ allowance — see `docs/limitations.md`.
 \`\`\`
 src/
 ├── models/    — the common data shape every document gets normalized into
+
 ├── ingest/    — reads .md/.docx/.pdf files, splits into entries, extracts tables
+
 ├── chunk/     — splits long documents into embedding-sized pieces
+
 ├── embed/     — embeds chunks and stores/searches them in ChromaDB
+
 ├── agent/     — the core search-read-decide loop + conflict-resolution agent
-└── web/       — optional Flask UI
+
+
 docs/          — architecture, decisions, and limitations documentation
+
 ai_usage/      — AI usage disclosure and exported chat logs
 \`\`\`
