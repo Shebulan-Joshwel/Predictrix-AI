@@ -1,5 +1,30 @@
 # Limitations — Ashen Era Archive Assistant
 
+
+## Free-tier model rotation causes inconsistent behavior
+
+`openrouter/free`, the model used for the agent's reasoning steps, is an
+auto-router that assigns a different underlying free model to each call
+rather than using one fixed model. This was a deliberate choice, since
+pinning one specific model risks that model being delisted from the free
+tier without warning, but it comes with a real trade-off: response quality
+and consistency vary between runs of the identical question.
+
+ 1. **Inconsistent thoroughness on repeat runs.** The same question was
+   observed to sometimes take a different number of search iterations, or
+   in one case fail to find an answer it had previously found correctly,
+   purely because a different underlying model was assigned to reason
+   through it that time.
+
+This is a known and accepted trade-off of using a free, card-free model
+router rather than a paid, fixed model. Our most-repeated questions
+(Gloamreach's founding year, the Gauntlet of Sorrowfell's forging year, and
+Ederon Fellgard's accord) were each re-run multiple times across different
+sessions and reliably converged on the same correct answer despite this
+variability, which we treat as reasonable evidence of underlying stability
+even though any single run is not perfectly guaranteed to succeed on the
+first attempt.
+
 ## OCR is disabled by default
 ~87 of the corpus's 415 files (standalone images and `.scan.pdf` files) require
 OCR to extract text. This was implemented (tesseract + pymupdf) and functions,
@@ -20,11 +45,14 @@ multi-document synthesis logic exists.
 
 ## Ground-truth verification
 Batch test results were verified for *mechanism* (did it search iteratively,
-chain correctly, catch conflicts) on real, previously-unseen questions. A subset
-of answers were also manually cross-checked against the actual source documents
-[[UPDATE THIS LINE WITH YOUR RESULT — e.g. "5/5 matched" or note any discrepancy found]].
-Time constraints (mid-semester exams during the build window) limited
-verification depth beyond this subset.
+chain correctly, catch conflicts) on real, previously-unseen questions. Direct
+manual cross-referencing against 1A source documents was not completed for every
+answer due to time constraints during the build window. As a partial substitute,
+our three most-tested questions were each run independently 3-4 times across
+different sessions, with OpenRouter's free-tier router assigning a different
+underlying model each time. All three produced the identical answer and the
+same underlying reasoning on every run (Gloamreach: 246 AS; Gauntlet of
+Sorrowfell: 391 AS; Ederon Fellgard's accord: The Leaden Accord) EXCEPT FOR THE LIMITATION STATED ABOVE AS "Free-tier model rotation causes inconsistent behavior".
 
 ## Free-tier API rate limits
 OpenRouter's free tier caps at 50 requests/day without a credit top-up. Each

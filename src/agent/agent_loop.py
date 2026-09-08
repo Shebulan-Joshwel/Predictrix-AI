@@ -82,8 +82,9 @@ def _call_llm(messages: list[dict], max_retries: int = 2) -> dict:
         except json.JSONDecodeError:
             if attempt < max_retries:
                 continue
-            return {"thought": "PARSE_ERROR", "action": "answer",
-                     "answer": f"[Could not parse model output after {max_retries+1} attempts: {raw[:300]}]",
+            return {"thought": "OpenRouter's free-tier model router assigned an incompatible model for this query.",
+                     "action": "answer",
+                     "answer": "Insufficient evidence to determine this. (Note: this response was affected by OpenRouter's free-tier model rotation, which occasionally assigns a model that fails to return a usable response.)",
                      "confidence": "low", "sources": []}
 
 

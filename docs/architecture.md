@@ -61,3 +61,5 @@ sample questions via multi-step chaining (e.g., person → faction → war-outco
 without any 1B-specific engineering. This is treated as an emergent property of
 the iterative design, not a deliberately built second capability — see
 `decisions.md` and `limitations.md`.
+
+See `docs/test-cases.md` for the full log of every test run, with exact commands
