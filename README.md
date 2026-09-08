@@ -83,6 +83,7 @@ allowance — see `docs/limitations.md`.
 
 \`\`\`
 src/
+
 ├── models/    — the common data shape every document gets normalized into
 
 ├── ingest/    — reads .md/.docx/.pdf files, splits into entries, extracts tables
