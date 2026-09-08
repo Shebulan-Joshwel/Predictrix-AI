@@ -73,11 +73,6 @@ python -m src.agent.batch_test
 # Run a different track's questions instead (e.g. to stress-test multi-hop)
 python -m src.agent.batch_test --track 1B
 
-# Optional: launch the web UI
-python -m src.web.app
-# then open http://127.0.0.1:5000
-\`\`\`
-
 ## Notes on API usage limits
 OpenRouter's free tier allows 50 requests/day without adding credit. Each agent
 search iteration uses 2 calls (embedding + decision), plus one conditional
@@ -86,14 +81,21 @@ allowance — see `docs/limitations.md`.
 
 ## Project structure
 
-\`\`\`
+
 src/
-├── models/    — the common data shape every document gets normalized into
-├── ingest/    — reads .md/.docx/.pdf files, splits into entries, extracts tables
-├── chunk/     — splits long documents into embedding-sized pieces
-├── embed/     — embeds chunks and stores/searches them in ChromaDB
-├── agent/     — the core search-read-decide loop + conflict-resolution agent
-└── web/       — optional Flask UI
-docs/          — architecture, decisions, and limitations documentation
-ai_usage/      — AI usage disclosure and exported chat logs
-\`\`\`
+
+    ├── models/    — the common data shape every document gets normalized into
+
+    ├── ingest/    — reads .md/.docx/.pdf files, splits into entries, extracts tables
+
+    ├── chunk/     — splits long documents into embedding-sized pieces
+
+    ├── embed/     — embeds chunks and stores/searches them in ChromaDB
+
+    ├── agent/     — the core search-read-decide loop + conflict-resolution agent
+
+
+    docs/          — architecture, decisions, and limitations documentation
+
+    ai_usage/      — AI usage disclosure and exported chat logs
+
